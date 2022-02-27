@@ -1,0 +1,3 @@
+/home/pi/Desktop/cse237a_finalproj/CMakeFiles/rebuild_cache.dir
+/home/pi/Desktop/cse237a_finalproj/CMakeFiles/webcam_test.dir
+/home/pi/Desktop/cse237a_finalproj/CMakeFiles/edit_cache.dir
