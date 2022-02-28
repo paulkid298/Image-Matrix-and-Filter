@@ -1,3 +1,5 @@
+#include "image_filter_sequential.hpp"
+
 #include "opencv2/opencv.hpp"
 #include "opencv2/highgui.hpp"
 #include <unistd.h>
@@ -23,68 +25,6 @@ const float ky[3][3] = {
     {1, 2, 1},
     {0, 0, 0},
     {-1, -2, -1}};
-
-int main()
-{
-    int out = process_camera();
-
-    return 0;
-}
-
-int process_camera()
-{
-    clock_t begin, end;
-    cv::VideoCapture video(0);
-    cv::Mat frame;
-    // accept only char type matrices
-    video.read(frame);
-    CV_Assert(frame.depth() == CV_8U);
-
-    int image_height = frame.rows;
-    int channels = frame.channels();
-    int image_width = frame.cols;
-    image_t matrix1[image_height][image_width];
-    image_t matrix2[image_height][image_width];
-    float theta[image_height][image_width];
-
-    cout << image_height << ", " << image_width << ", " << channels << "\n";
-
-    if (!video.isOpened())
-        return -1;
-
-    // compute gaussian matrix
-    float *filter = gaussian_kernel(GAUSSIAN_SIZE, SIGMA);
-    cv::Mat gray(image_height, image_width, CV_8UC1, matrix2);
-    cv::Mat gray2(image_height, image_width, CV_8UC1, matrix1);
-
-    while (video.read(frame))
-    {
-        begin = clock();
-        // cv::imshow("Before", frame);
-        //  covert to grayscale
-        grayscale(frame, *matrix1, , image_height, image_width);
-        // apply gaussian blur
-        convolve(*matrix1, *matrix2, image_height, image_width, filter, GAUSSIAN_SIZE);
-        sobel_filter(*matrix2, *matrix1, *theta, image_height, image_width);
-        image_t max = non_max_suppression(*matrix1, *matrix2, *theta, image_height, image_width);
-
-        // apply double threshold
-        vector<struct Strong_Edge> v1;
-        end = clock();
-        double spent = ((double)(end - begin)) / CLOCKS_PER_SEC;
-        cout << "Processing took " << spent << " seconds\n";
-
-        cv::imshow("Video feed", gray2);
-
-        if (cv::waitKey(25) >= 0)
-        {
-            break;
-        }
-        // imwrite("./image.jpg", gray);
-        // usleep(DURATION);
-    }
-    return 0;
-}
 
 // algorithm taken from
 // https://stackoverflow.com/questions/17615963/standard-rgb-to-grayscale-conversion
