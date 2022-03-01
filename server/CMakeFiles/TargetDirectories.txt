@@ -1,0 +1,4 @@
+/home/paul/Documents/Image-Matrix-and-Filter/server/CMakeFiles/rebuild_cache.dir
+/home/paul/Documents/Image-Matrix-and-Filter/server/CMakeFiles/edit_cache.dir
+/home/paul/Documents/Image-Matrix-and-Filter/server/CMakeFiles/LibsModule.dir
+/home/paul/Documents/Image-Matrix-and-Filter/server/CMakeFiles/main.dir
