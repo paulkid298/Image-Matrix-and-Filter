@@ -18,3 +18,5 @@ ADD_LIBRARY(LibsModule
 
 target_link_libraries (main ${CMAKE_THREAD_LIBS_INIT} ${OpenCV_LIBS} LibsModule)
 
+set(CMAKE_BUILD_TYPE Debug)
+

@@ -8,6 +8,7 @@ CMakeFiles/main.dir/main.cpp.o
  /home/paul/Documents/Image-Matrix-and-Filter/server/image_filter_sequential.hpp
  /home/paul/Documents/Image-Matrix-and-Filter/server/main.cpp
  /home/paul/Documents/Image-Matrix-and-Filter/server/server.cpp
+ /home/paul/Documents/Image-Matrix-and-Filter/server/server.hpp
  /home/paul/Documents/Image-Matrix-and-Filter/server/utils.hpp
  /home/paul/Documents/Image-Matrix-and-Filter/server/utils_singlethread.cpp
  /usr/local/include/opencv4/opencv2/calib3d.hpp

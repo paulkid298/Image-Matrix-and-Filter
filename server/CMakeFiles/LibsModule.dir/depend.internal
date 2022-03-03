@@ -434,6 +434,7 @@ CMakeFiles/LibsModule.dir/server.cpp.o
  /home/paul/Documents/Image-Matrix-and-Filter/server/global.hpp
  /home/paul/Documents/Image-Matrix-and-Filter/server/image_filter_parallel.hpp
  /home/paul/Documents/Image-Matrix-and-Filter/server/server.cpp
+ /home/paul/Documents/Image-Matrix-and-Filter/server/server.hpp
  /usr/local/include/opencv4/opencv2/calib3d.hpp
  /usr/local/include/opencv4/opencv2/core.hpp
  /usr/local/include/opencv4/opencv2/core/affine.hpp
@@ -651,6 +652,7 @@ CMakeFiles/LibsModule.dir/utils_singlethread.cpp.o
  /home/paul/Documents/Image-Matrix-and-Filter/server/global.hpp
  /home/paul/Documents/Image-Matrix-and-Filter/server/image_filter_parallel.hpp
  /home/paul/Documents/Image-Matrix-and-Filter/server/image_filter_sequential.hpp
+ /home/paul/Documents/Image-Matrix-and-Filter/server/server.hpp
  /home/paul/Documents/Image-Matrix-and-Filter/server/utils_singlethread.cpp
  /usr/local/include/opencv4/opencv2/calib3d.hpp
  /usr/local/include/opencv4/opencv2/core.hpp

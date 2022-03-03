@@ -103,6 +103,10 @@ netinet/in.h
 -
 global.hpp
 /home/paul/Documents/Image-Matrix-and-Filter/server/global.hpp
+server.hpp
+/home/paul/Documents/Image-Matrix-and-Filter/server/server.hpp
+
+/home/paul/Documents/Image-Matrix-and-Filter/server/server.hpp
 
 /home/paul/Documents/Image-Matrix-and-Filter/server/utils.hpp
 
@@ -127,6 +131,8 @@ image_filter_sequential.hpp
 /home/paul/Documents/Image-Matrix-and-Filter/server/image_filter_sequential.hpp
 global.hpp
 /home/paul/Documents/Image-Matrix-and-Filter/server/global.hpp
+server.hpp
+/home/paul/Documents/Image-Matrix-and-Filter/server/server.hpp
 
 /usr/local/include/opencv4/opencv2/calib3d.hpp
 opencv2/core.hpp

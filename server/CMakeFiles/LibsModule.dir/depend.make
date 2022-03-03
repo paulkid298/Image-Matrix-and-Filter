@@ -433,6 +433,7 @@ CMakeFiles/LibsModule.dir/image_filter_sequential.cpp.o: /usr/local/include/open
 CMakeFiles/LibsModule.dir/server.cpp.o: global.hpp
 CMakeFiles/LibsModule.dir/server.cpp.o: image_filter_parallel.hpp
 CMakeFiles/LibsModule.dir/server.cpp.o: server.cpp
+CMakeFiles/LibsModule.dir/server.cpp.o: server.hpp
 CMakeFiles/LibsModule.dir/server.cpp.o: /usr/local/include/opencv4/opencv2/calib3d.hpp
 CMakeFiles/LibsModule.dir/server.cpp.o: /usr/local/include/opencv4/opencv2/core.hpp
 CMakeFiles/LibsModule.dir/server.cpp.o: /usr/local/include/opencv4/opencv2/core/affine.hpp
@@ -650,6 +651,7 @@ CMakeFiles/LibsModule.dir/utils.cpp.o: /usr/local/include/opencv4/opencv2/videoi
 CMakeFiles/LibsModule.dir/utils_singlethread.cpp.o: global.hpp
 CMakeFiles/LibsModule.dir/utils_singlethread.cpp.o: image_filter_parallel.hpp
 CMakeFiles/LibsModule.dir/utils_singlethread.cpp.o: image_filter_sequential.hpp
+CMakeFiles/LibsModule.dir/utils_singlethread.cpp.o: server.hpp
 CMakeFiles/LibsModule.dir/utils_singlethread.cpp.o: utils_singlethread.cpp
 CMakeFiles/LibsModule.dir/utils_singlethread.cpp.o: /usr/local/include/opencv4/opencv2/calib3d.hpp
 CMakeFiles/LibsModule.dir/utils_singlethread.cpp.o: /usr/local/include/opencv4/opencv2/core.hpp

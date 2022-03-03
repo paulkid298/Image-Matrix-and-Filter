@@ -8,45 +8,64 @@
 #include <netinet/in.h>
 
 #include "global.hpp"
+#include "server.hpp"
 
-#define PORT 8080
 #define MAXLINE 640 * 480
+#define RESPONSE_SIZE 64
 
 extern image_t *images[NUM_IMAGES];
-extern int ind_p_in, ind_p_out;
-
+extern int ind_p_out;
+/**
 void *run_server_thread(void *var)
 {
-    int sockfd;
-    char buffer[MAXLINE];
-    char *response = "received";
-    struct sockaddr_in servaddr, cliaddr;
+    int sockfd, connfd;
+    socklen_t len;
+    struct sockaddr_in servaddr, cli;
 
-    // create socket file descriptor
-    if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
+    // socket create and verification
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd == -1)
     {
-        perror("socket creation failed");
-        exit(EXIT_FAILURE);
+        printf("socket creation failed...\n");
+        exit(0);
     }
+    else
+        printf("Socket successfully created..\n");
+    bzero(&servaddr, sizeof(servaddr));
 
-    memset(&servaddr, 0, sizeof(servaddr));
-    memset(&cliaddr, 0, sizeof(cliaddr));
-
-    // Server information
+    // assign IP, PORT
     servaddr.sin_family = AF_INET;
-    servaddr.sin_addr.s_addr = INADDR_ANY;
+    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
     servaddr.sin_port = htons(PORT);
 
-    // bind socket with server address
-    if (bind(sockfd, (const struct sockaddr *)&servaddr, sizeof(servaddr)) < 0)
+    // Binding newly created socket to given IP and verification
+    if ((bind(sockfd, (const struct sockaddr *)&servaddr, sizeof(servaddr))) != 0)
     {
-        perror("bind failed");
-        exit(EXIT_FAILURE);
+        printf("socket bind failed...\n");
+        exit(0);
     }
+    else
+        printf("Socket successfully binded..\n");
 
-    unsigned len, n, response_length;
-    response_length = strlen(response);
-    len = sizeof(cliaddr);
+    // Now server is ready to listen and verification
+    if ((listen(sockfd, 5)) != 0)
+    {
+        printf("Listen failed...\n");
+        exit(0);
+    }
+    else
+        printf("Server listening..\n");
+    len = sizeof(cli);
+
+    // Accept the data packet from client and verification
+    connfd = accept(sockfd, (struct sockaddr *)&cli, &len);
+    if (connfd < 0)
+    {
+        printf("server accept failed...\n");
+        exit(0);
+    }
+    else
+        printf("server accept the client...\n");
 
     while (true)
     {
@@ -57,16 +76,56 @@ void *run_server_thread(void *var)
         }
         else
         {
-            n = recvfrom(sockfd, (char *)images[ind_p_in], MAXLINE, MSG_WAITALL,
-                         (struct sockaddr *)&cliaddr, &len);
-            images[ind_p_in][n] = '\0';
-
-            sendto(sockfd, (const char *)response, response_length, MSG_CONFIRM,
-                   (const struct sockaddr *)&cliaddr, len);
+            receivePacket(images[ind_p_in], connfd);
 
             ind_p_in = (ind_p_in + 1) % NUM_IMAGES;
         }
     }
     close(sockfd);
-    return 0;
+    pthread_exit(NULL);
+}
+*/
+void receivePacket(unsigned char *packet, int connfd)
+{
+    int numPackets = ceil((float)MAXLINE / MAXBYTES);
+    char *response = "received";
+    int index = 0;
+    char buf[MAXBYTES];
+    int total_read = 0;
+    while (total_read < MAXLINE)
+    {
+        int bytesRead = 0;
+        if (bytesRead = read(connfd, buf, MAXBYTES) < 0)
+        {
+            printf("recv failed\n");
+        }
+        printf("Received packet rom Client\n");
+        memcpy(packet + total_read, buf, bytesRead);
+        total_read += bytesRead;
+        write(connfd, response, strlen(response));
+    }
+
+    for (int i = 0; i < numPackets; i++)
+    {
+        if (i == numPackets - 1)
+        {
+            int leftover = numPackets * MAXBYTES - MAXLINE;
+            //read(connfd, packet + i * MAXBYTES, leftover);
+        }
+        else
+        {
+            //read(connfd, packet + i * MAXBYTES, MAXBYTES);
+        }
+        int readSize;
+
+        write(connfd, response, sizeof(response));
+
+        // if msg contains "Exit" then server exit and chat ended.
+        if (strncmp("exit", (const char *)(packet + i * MAXBYTES), 4) == 0)
+        {
+            printf("Server Exit...\n");
+            break;
+        }
+    }
+    printf("Received image from client\n");
 }

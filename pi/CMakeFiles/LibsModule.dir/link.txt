@@ -1,0 +1,2 @@
+/usr/bin/ar qc libLibsModule.a  CMakeFiles/LibsModule.dir/client.cpp.o CMakeFiles/LibsModule.dir/utils_singlethread.cpp.o CMakeFiles/LibsModule.dir/utils.cpp.o CMakeFiles/LibsModule.dir/image_filter_sequential.cpp.o CMakeFiles/LibsModule.dir/image_filter_parallel.cpp.o CMakeFiles/LibsModule.dir/global.cpp.o
+/usr/bin/ranlib libLibsModule.a

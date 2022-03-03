@@ -7,6 +7,7 @@ CMakeFiles/main.dir/main.cpp.o: image_filter_parallel.hpp
 CMakeFiles/main.dir/main.cpp.o: image_filter_sequential.hpp
 CMakeFiles/main.dir/main.cpp.o: main.cpp
 CMakeFiles/main.dir/main.cpp.o: server.cpp
+CMakeFiles/main.dir/main.cpp.o: server.hpp
 CMakeFiles/main.dir/main.cpp.o: utils.hpp
 CMakeFiles/main.dir/main.cpp.o: utils_singlethread.cpp
 CMakeFiles/main.dir/main.cpp.o: /usr/local/include/opencv4/opencv2/calib3d.hpp
