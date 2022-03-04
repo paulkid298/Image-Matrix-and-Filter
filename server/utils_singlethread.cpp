@@ -16,12 +16,15 @@
 
 #define OUT_PORT 8081
 #define MAXLINE 640 * 480
+#include <time.h>
 
 void receivePacket(int sockfd, unsigned char *image_in, struct sockaddr_in &cliaddr);
 void sendPacket(int sockfd, unsigned char *packet, struct sockaddr_in &servaddr);
 
 void run_nonpipeline_server()
 {
+    clock_t start, end;
+    double cpu_time_used;
     int width = WIDTH;
     int height = HEIGHT;
     /** prepare TCP server */
@@ -94,6 +97,7 @@ void run_nonpipeline_server()
 
     while (true)
     {
+        start = clock();
         float max_out = 0;
 
         video.read(frame);
@@ -109,6 +113,11 @@ void run_nonpipeline_server()
         threshold(images[1], images[0], height, width, LOW_THRESHOLD,
                   HIGH_THRESHOLD, max_out);
         hysteresis(images[0], images[1], height, width);
+
+        end = clock();
+        cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+        printf("throughput %f\n", cpu_time_used);
+        //printf("Running Client thread: %d\n", sv->ind_p_out);
 
         cv::Mat input(height, width, CV_8UC1, images[1]);
         cv::imshow("image", input);

@@ -8,6 +8,7 @@
 #include <netinet/in.h>
 
 #include "global.hpp"
+#include <time.h>
 
 #define RESPONSE_SIZE 64
 #define SERVER "127.0.0.1"
@@ -23,6 +24,8 @@ extern cv::Mat out_images[NUM_OUTPUTS];
 
 void *run_client_thread(void *var)
 {
+    clock_t start, end;
+    double cpu_time_used;
     int width = WIDTH;
     int height = HEIGHT;
     SharedVariable *sv = (SharedVariable *)var;
@@ -53,6 +56,7 @@ void *run_client_thread(void *var)
     int once = 0;
     //FILE *fp;
     //fp = fopen("../arduino/test.txt", "w+");
+    start = clock();
 
     while (true)
     {
@@ -62,24 +66,28 @@ void *run_client_thread(void *var)
         }
         else
         {
-            printf("Running Client thread: %d\n", sv->ind_p_out);
+            end = clock();
+            cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+            printf("throughput %f", cpu_time_used);
+            //printf("Running Client thread: %d\n", sv->ind_p_out);
 
             // conversion taken from
             // https://stackoverflow.com/questions/26681713/convert-mat-to-array-vector-in-opencv
             cv::Mat image = sv->out_images[(sv->ind_p_out + 1) % NUM_OUTPUTS];
             image = image(cv::Range(0, FINAL_WIDTH), cv::Range(16, 16 + FINAL_WIDTH));
-
+            /**
             cv::imshow("Result_final", image);
             if (cv::waitKey(25) >= 0)
             {
                 int x = 0 + 0;
             }
-
+*/
             char out_packet[FINAL_WIDTH * FINAL_WIDTH / 8];
 
             int start = (DOWN_WIDTH - FINAL_WIDTH) / 2;
-            fprintf(stdout, "\n{");
+            //fprintf(stdout, "\n{");
 
+            /**
             // convert image to condensed packet
             for (int i = 0; i < FINAL_WIDTH; i++)
             {
@@ -100,11 +108,11 @@ void *run_client_thread(void *var)
                     // out_packet[(i)*FINAL_WIDTH + (j - start)] = val;
                     if (!once)
                     {
-                        printf("%u, ", (unsigned int)val);
+                        //printf("%u, ", (unsigned int)val);
                     }
                 }
-            }
-            fprintf(stdout, "};\n");
+            }*/
+            //fprintf(stdout, "};\n");
             //once = 1;
 
             /**
@@ -121,6 +129,7 @@ void *run_client_thread(void *var)
             */
 
             sv->ind_p_out = (sv->ind_p_out + 1) % NUM_IMAGES;
+            start = clock();
         }
     }
 

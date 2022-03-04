@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string.h>
 
-#define PARALLEL 0
+#define PARALLEL 1
 
 using namespace cv;
 
@@ -48,7 +48,7 @@ void *run_gray_thread(void *var)
         }
         else
         {
-            printf("Running Gray thread %d\n", sv->ind_gray);
+            //printf("Running Gray thread %d\n", sv->ind_gray);
 
             if (PARALLEL)
             {
@@ -60,6 +60,15 @@ void *run_gray_thread(void *var)
                 grayscale(sv->out_images[(sv->ind_gray + 1) % NUM_OUTPUTS],
                           sv->images[sv->ind_gray], height, width);
             }
+            /**
+            cv::Mat input = cv::Mat(height, width, CV_8UC1,
+                                    sv->images[sv->ind_gray]);
+            cv::imshow("After", input);
+            if (cv::waitKey(25) >= 0)
+            {
+                int x = 0 + 0;
+            }
+            */
 
             sv->ind_gray = (sv->ind_gray + 1) % NUM_IMAGES;
         }
@@ -73,7 +82,7 @@ void *run_convolve_thread(void *var)
     int height = HEIGHT;
     SharedVariable *sv = (SharedVariable *)var;
     float *filter = gaussian_kernel(GAUSSIAN_SIZE, SIGMA);
-    fprintf(stderr, "starting thread\n");
+    //fprintf(stderr, "starting thread\n");
     while (true)
     {
         if (!ready(sv->ind_conv, sv->ind_gray))
@@ -100,7 +109,7 @@ void *run_convolve_thread(void *var)
             sv->ind_conv = (sv->ind_conv + 1) % NUM_IMAGES;
         }
     }
-    fprintf(stderr, "exiting thread\n");
+    //fprintf(stderr, "exiting thread\n");
     pthread_exit(NULL);
 }
 
@@ -117,7 +126,7 @@ void *run_sobel_thread(void *var)
         }
         else
         {
-            printf("Running sobel thread %d\n", sv->ind_sob);
+            //printf("Running sobel thread %d\n", sv->ind_sob);
             float max = 0;
             if (PARALLEL)
             {
@@ -155,7 +164,7 @@ void *run_suppression_thread(void *var)
         }
         else
         {
-            printf("Running suppression thread %d\n", sv->ind_supp);
+            //printf("Running suppression thread %d\n", sv->ind_supp);
             float max_out;
             float max_in = maximums[sv->ind_supp];
             if (PARALLEL)
@@ -194,7 +203,7 @@ void *run_threshold_thread(void *var)
         }
         else
         {
-            printf("Running threshold thread %d\n", sv->ind_thresh);
+            //printf("Running threshold thread %d\n", sv->ind_thresh);
             float max_in = maximums[(sv->ind_thresh + 1) % NUM_IMAGES];
             if (PARALLEL)
             {
@@ -229,7 +238,7 @@ void *run_hysteresis_thread(void *var)
         }
         else
         {
-            printf("Running Hysteresis thread %d\n", sv->ind_hyster);
+            //printf("Running Hysteresis thread %d\n", sv->ind_hyster);
             if (PARALLEL)
             {
                 ParallelHysteresis
@@ -262,15 +271,17 @@ void *run_resize_thread(void *var)
         }
         else
         {
-            printf("Running Resize thread: %d\n", sv->ind_resize);
+            //printf("Running Resize thread: %d\n", sv->ind_resize);
 
             cv::Mat input = cv::Mat(height, width, CV_8UC1,
                                     sv->images[(sv->ind_resize + 1) % NUM_IMAGES]);
-            cv::imshow("Result", input);
+
+            cv::imshow("Result_final_full", input);
             if (cv::waitKey(25) >= 0)
             {
                 int x = 0 + 0;
             }
+
             cv::Mat output;
             cv::resize(input, output, Size(DOWN_WIDTH, DOWN_HEIGHT),
                        INTER_LINEAR);
